@@ -39,6 +39,11 @@
         フィルタしない
       </li>
     </ul>
+
+    <h2>保存と復元</h2>
+    <button type="button" @click="save">保存</button>
+    <button type="button" @click="restore">復元</button>
+
   </div>
 </template>
 
@@ -95,6 +100,14 @@ export default {
       this.$store.commit('changeFilter', {
         filter: labelId
       })
+    },
+    //現在のデータを保存
+    save () {
+      this.$store.dispatch('save')
+    },
+    //保存されているデータを復元
+    restore () {
+      this.$store.dispatch('restore')
     }
   }
 }
