@@ -34,7 +34,21 @@ const store = new Vuex.Store({
       }
     ],
     nextTaskId: 3,
-    nextLabelId: 4
+    nextLabelId: 4,
+    //選択されているラベルid
+    filter: null
+  },
+  getters: {
+    //タスクをフィルタリング
+    filteredTasks (state) {
+      if (!state.filter) {
+        return state.tasks
+      }
+      //選択されているラベルのタスクidを返す
+      return state.tasks.filter(task => {
+        return task.labelIds.indexOf(state.filter) >= 0
+      })
+    }
   },
   mutations: {
     //タスクを追加
@@ -66,6 +80,10 @@ const store = new Vuex.Store({
       })
 
       state.nextLabelId++
+    },
+    //フィルタリング対象のラベルを変更
+    changeFilter (state, { filter }) {
+      state.filter = filter
     }
   }
 })
