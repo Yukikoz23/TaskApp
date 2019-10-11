@@ -53,7 +53,7 @@ const store = new Vuex.Store({
   mutations: {
     //タスクを追加
     addTask (state, { name, labelIds }) {
-      state.task.push({
+      state.tasks.push({
         id: state.nextTaskId,
         name,
         labelIds,
@@ -84,6 +84,32 @@ const store = new Vuex.Store({
     //フィルタリング対象のラベルを変更
     changeFilter (state, { filter }) {
       state.filter = filter
+    },
+    //ステートを復元する
+    restore (state, { tasks, labels, nextTaskId, nextLabelId }) {
+      state.tasks = tasks
+      state.labels = labels
+      state.nextTaskId = nextTaskId
+      state.nextLabelId = nextLabelId
+    }
+  },
+  actions: {
+    //ローカルストレージにステートを保存
+    save ({ state }) {
+      const data = {
+        tasks: state.tasks,
+        labels: state.labels,
+        nextTaskId: state.nextTaskId,
+        nextLabelId: state.nextLabelId
+      }
+      localStorage.setItem('task-app-data', JSON.stringify(data))
+    },
+    //ローカルストレージからステートを復元する
+    restore ({ commit }) {
+      const data = localStorage.getItem('task-app-data')
+      if (data) {
+        commit('restore', JSON.parse(data))
+      }
     }
   }
 })
