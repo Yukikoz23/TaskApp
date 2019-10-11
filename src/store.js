@@ -31,10 +31,14 @@ const store = new Vuex.Store({
       {
         id: 3,
         text: '本'
-      }
+      },
+      {
+        id: 4,
+        text: '雑貨'
+      },
     ],
     nextTaskId: 3,
-    nextLabelId: 4,
+    nextLabelId: 5,
     //選択されているラベルid
     filter: null
   },
